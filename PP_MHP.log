@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.16)  16 MAY 2023 16:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.16)  17 MAY 2023 20:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -232,7 +232,8 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 File: l3backend-pdftex.def 2023-01-16 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count282
 \l__pdf_internal_box=\box55
-) (./PP_MHP.aux)
+)
+No file PP_MHP.aux.
 \openout1 = `PP_MHP.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -249,7 +250,6 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
-
 -- Lines per column: 56 (exact).
 (c:/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -284,10 +284,53 @@ Underfull \hbox (badness 2376) in paragraph at lines 71--81
 []\OT1/ptm/m/n/10 In re-cent years, per-mis-sion-less cryp-tocur-ren-cies, have
  []
 
-[1{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc}
+<fig2.png, id=1, 487.22025pt x 171.64125pt>
+File: fig2.png Graphic file (type png)
+<use fig2.png>
+Package pdftex.def Info: fig2.png  used on input line 109.
+(pdftex.def)             Requested size: 487.21906pt x 171.64081pt.
+
+Overfull \hbox (235.21906pt too wide) in paragraph at lines 109--110
+ [][] 
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 115.
+(c:/texlive/2023/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 115.
+ [1{c:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
-]
+] [2 <./fig2.png>]
+
+LaTeX Warning: Citation `b1' on page 3 undefined on input line 226.
+
+
+LaTeX Warning: Citation `b2' on page 3 undefined on input line 227.
+
+
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 228.
+
+
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 228.
+
+
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 228.
+
+
+LaTeX Warning: Citation `b3' on page 3 undefined on input line 229.
+
+
+LaTeX Warning: Citation `b4' on page 3 undefined on input line 237.
+
+
+LaTeX Warning: Citation `b5' on page 3 undefined on input line 238.
+
+
+LaTeX Warning: Citation `b6' on page 3 undefined on input line 243.
+
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -299,20 +342,27 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[2] (./PP_MHP.aux) ) 
+[3] (./PP_MHP.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 4233 strings out of 476025
- 65574 string characters out of 5794015
- 1867382 words of memory out of 5000000
- 24648 multiletter control sequences out of 15000+600000
- 555629 words of font info for 124 fonts, out of 8000000 for 9000
+ 4271 strings out of 476025
+ 66099 string characters out of 5794015
+ 1870382 words of memory out of 5000000
+ 24677 multiletter control sequences out of 15000+600000
+ 558707 words of font info for 131 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,62p,335b,304s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on PP_MHP.pdf (2 pages, 71618 bytes).
+<c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on PP_MHP.pdf (3 pages, 158602 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 22 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

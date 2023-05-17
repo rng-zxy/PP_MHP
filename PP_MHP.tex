@@ -94,8 +94,46 @@ In this section, we provide an overview on the background and the
 notations used throughout the paper.
 \subsection{UTXO model}
 
-Transaction output is the fundamental component of Bitcoin transaction,which is an indivisible Bitcoin currency
- recorded on the blockchain and recognized as valid by the entire network.
+In this work, we assume the underlying blockchain, like Bitcoin, is based on the UTXO model. Transaction output is the fundamental 
+component of Bitcoin transaction,which is an indivisible Bitcoin currency recorded on the blockchain and recognized as valid by 
+the entire network. The Bitcoin complete nodes tracks all available outputs called \emph{unspent transaction outpus} (UTXO). 
+UTXOs can be any value and once generated are indivisible, a UTXO can only be consumed as a whole in a single transaction. 
+The output consists of two parts,which we represent as a tuple $\theta :=\{cash,\phi\}, \theta.cash$ is the output value,
+ and the $\theta.\phi$ is the condition to spend this output, it also called \emph{locking script}. Onesig(\emph{U}) indicates 
+ that the condition required to spend this output is a digital signature. We say that a user \emph{U} can spend an output only if
+ $\theta.\phi$ contains only a signature w.r.t verification \emph{U}'s public key, if multiple signatures are required, we use 
+ MultiSig($\it U_1,U_2,...,U_n$).
+
+ %插图
+
+ Transactions consume previously recorded unused UTXOs and create new UTXOs available for future transaction, in this way, the 
+ transaction continues in the form of a chain of owners. on the chain, the input of the transaction corresponds to the output 
+ of the previous transaction. We denote a transaction as a tuple $\bf TX$ := \{id,input,output,timelock,witness\}, $\bf TX$.id$\in\{0,1\}^*$
+ is the identifier of a transaction and $\bf TX$.id = $\mathcal H$($\bf TX$.input,$\bf TX$.output,$\bf TX$.timelock), $\mathcal H$ is a hash function,
+ modeled as a random oracle. $\bf TX$.input and $\bf TX$.output denotes the list of the inputs and the list of new outputs respectively.
+ $\bf TX$.timelock defined as the earliest time a transaction is valid and can be transmitted on the network or added to the blockchain, 
+ it defaults to 0 in most transactions. $\bf TX$.witness$\in\{0,1\}^*$, also called \emph{ScriptSig}, is part of the transaction input to address or satisfy the spending 
+ conditions set by the \emph{locking script} on the output. Actually, before being recorded on the blockchain, transactions must go
+ through the consensus mechanism of all nodes. During this period, each node will independently verify the transaction. For specific 
+ details please refer to \colorbox{yellow}{[]}, we will only briefly describe the key parts: For a transaction(1) The sum of the input value cannot be less 
+ than the sum of the output value;(1)For each input, the quoted output cannot exist in any other transaction, it must exist and not 
+ be spent;(3) The \emph{ScriptSig} for each input must be validated against the \emph{locking script} for the corresponding output.
+ To put it simply, the transaction must provide valid validation that satisfies the spending conditions of each input.
+
+ We use charts to visualize the transaction for a clearer illustration. Rounded rectangles represent transactions, thick-edged rectangles 
+ represent transactions that have already been published on the blockchain, and thin-edged rectangles for transactions to be published.
+ The transaction contains at least one box to represent the output of the transaction, and the value in the box indicates the number of 
+ coins in this output. On the arrows coming from the output, are noted the conditions under which this output is spent. The public key 
+ below the arrow indicates who can use this output; Above the arrow is the timelock for the output(in this work only uses timelock 
+ as additional condition, which in practice could be any script supported by the underlying blockchain scripting language). There are 
+ two types of timelocks: \emph{relative time lock} and \emph{absolute time lock}, we use "+\emph{t}" to represent the relative time lock, 
+ that is, the transaction only vaild at least \emph{t} blocks has passed through after the transaction being recorded on the blockchain; 
+ The absolute time lock "$\geq$\emph{t}" specifies the absolute time point, indicating that the first transaction has passed through \emph{t} 
+ round after being recorded on the blockchain. Finally, we use a diamond to represent the relationship of "or" that the output conditions are 
+ different, expressed in the symbolic form as $\varphi = \varphi_1 \vee ...\vee \varphi_n$, where $\varphi$ is the output locking script,
+ written on the arrows of the output. A complete example is given in Figure \colorbox{yellow}{x}.
+
+
 
 
 \subsection{Payment channels}
