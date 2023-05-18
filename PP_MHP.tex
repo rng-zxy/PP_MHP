@@ -105,14 +105,24 @@ The output consists of two parts,which we represent as a tuple $\theta :=\{cash,
  MultiSig($\it U_1,U_2,...,U_n$).
 
  %插图
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.5]{fig2.png}
+    \caption{Left transaction $TX_1$ is recorded on the blockchain, which has two output. Value $\alpha_1$ can spent by A, with a 
+    transaction signed w.r.t $PK_A$ after $\emph{t}_1$ rounds, and the output of value $\alpha_2$ can be spent by a transaction signed w.r.t 
+    $PK_A$ and $PK_B$ but only if at least $\emph{t}_2$ rounds has passed through after the transaction being published on the blockchain. The
+    right transaction $TX_2$ has one input which is the second output of $TX_1$ with the value $\alpha_1$. $TX_2$ has only one
+    output containing $\alpha_3$ coins, which can spent by a transaction whose witness satisfies the condition $\varphi_1 \vee (\varphi_2 
+    \wedge \varphi_3)$}
+\end{figure}
 
  Transactions consume previously recorded unused UTXOs and create new UTXOs available for future transaction, in this way, the 
  transaction continues in the form of a chain of owners. on the chain, the input of the transaction corresponds to the output 
- of the previous transaction. We denote a transaction as a tuple $\bf TX$ := \{id,input,output,timelock,witness\}, $\bf TX$.id$\in\{0,1\}^*$
- is the identifier of a transaction and $\bf TX$.id = $\mathcal H$($\bf TX$.input,$\bf TX$.output,$\bf TX$.timelock), $\mathcal H$ is a hash function,
- modeled as a random oracle. $\bf TX$.input and $\bf TX$.output denotes the list of the inputs and the list of new outputs respectively.
+ of the previous transaction. We denote a transaction as a tuple TX := \{id,input,output,timelock,witness\}, TX.id$\in\{0,1\}^*$
+ is the identifier of a transaction and TX.id = $\mathcal H$(TX.input,TX.output,TX.timelock), $\mathcal H$ is a hash function,
+ modeled as a random oracle. TX.input and TX.output denotes the list of the inputs and the list of new outputs respectively.
  $\bf TX$.timelock defined as the earliest time a transaction is valid and can be transmitted on the network or added to the blockchain, 
- it defaults to 0 in most transactions. $\bf TX$.witness$\in\{0,1\}^*$, also called \emph{ScriptSig}, is part of the transaction input to address or satisfy the spending 
+ it defaults to 0 in most transactions. TX.witness$\in\{0,1\}^*$, also called \emph{ScriptSig}, is part of the transaction input to address or satisfy the spending 
  conditions set by the \emph{locking script} on the output. Actually, before being recorded on the blockchain, transactions must go
  through the consensus mechanism of all nodes. During this period, each node will independently verify the transaction. For specific 
  details please refer to \colorbox{yellow}{[]}, we will only briefly describe the key parts: For a transaction(1) The sum of the input value cannot be less 
@@ -131,20 +141,22 @@ The output consists of two parts,which we represent as a tuple $\theta :=\{cash,
  The absolute time lock "$\geq$\emph{t}" specifies the absolute time point, indicating that the first transaction has passed through \emph{t} 
  round after being recorded on the blockchain. Finally, we use a diamond to represent the relationship of "or" that the output conditions are 
  different, expressed in the symbolic form as $\varphi = \varphi_1 \vee ...\vee \varphi_n$, where $\varphi$ is the output locking script,
- written on the arrows of the output. A complete example is given in Figure \colorbox{yellow}{x}.
-
-
+ written on the arrows of the output. A complete example is given in Fig. \colorbox{yellow}{1}.
 
 
 \subsection{Payment channels}
 
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+The payment channel is opened by two users locking some coins on the blockchain, and then the two parties can make as many quick 
+instant confirmation transactions off-chain, that is, without waiting for transmitting the transaction to the blockchain, as long 
+as the total amount of each transaction is less than the locked value. During the lifetime of the channel, only two transactions 
+will be recorded on the blockchain, one is funding transaction $TX_f$ which used to open the channel, the other is settlement 
+transaction for close the channel. The funding transaction $TX_f$ determines the balance of this channel, and the channel is open 
+when $TX_f$ is broadcast to the network and recorded on the blockchain, both parties update the channel balance by exchanging signed 
+transactions off-chain, these transactions holding the reassigned balances are called state of the channel $TX_{state}$. Finally, the 
+channel is closed by posting settlement transaction, which is the final state, on the blockchain.In a more detil, there are three 
+operations of the payment channel: $\emph{open, update,}$ and  $\emph{close}$.
+
+1) \emph{Open}
 
 \subsection{Payment channel networks}
 
