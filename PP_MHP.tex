@@ -143,7 +143,6 @@ The output consists of two parts,which we represent as a tuple $\theta :=\{cash,
  different, expressed in the symbolic form as $\varphi = \varphi_1 \vee ...\vee \varphi_n$, where $\varphi$ is the output locking script,
  written on the arrows of the output. A complete example is given in Fig. \colorbox{yellow}{1}.
 
-
 \subsection{Payment channels}
 
 The payment channel is opened by two users locking some coins on the blockchain, and then the two parties can make as many quick 
@@ -152,11 +151,47 @@ as the total amount of each transaction is less than the locked value. During th
 will be recorded on the blockchain, one is funding transaction $TX_f$ which used to open the channel, the other is settlement 
 transaction for close the channel. The funding transaction $TX_f$ determines the balance of this channel, and the channel is open 
 when $TX_f$ is broadcast to the network and recorded on the blockchain, both parties update the channel balance by exchanging signed 
-transactions off-chain, these transactions holding the reassigned balances are called state of the channel $TX_{state}$. Finally, the 
+transactions off-chain, these transactions holding the reassigned balances are called state of the channel. Finally, the 
 channel is closed by posting settlement transaction, which is the final state, on the blockchain.In a more detil, there are three 
 operations of the payment channel: $\emph{open, update,}$ and  $\emph{close}$.
 
-1) \emph{Open}
+1) \emph{Open}: Suppose that Alice and Bob want to create a payment channel, and to do so, Alice and Bob agree on a funding
+transaction $TX_f$. The output value of $TX_f$ is $\alpha_A+\alpha_B$, which is the total amount of the channel, and there are two inputs 
+to the $TX_f$ are from Alice and Bob respectively, $\alpha_A$ represents the initial deposit provided by Alice in the channel, and 
+$\alpha_B$ represents Bob's. When $TX_f$ is published on the blockchain, it indicates that the payment channel has been opened.
+
+2) \emph{update}: After the channel is opened, to update the balance status of both sides of the channel, that is to make a transaction, 
+parties exchange signatures on the commit transaction. Each time a new "commit transaction" is exchanged, the previous state of the channel 
+is overwritten and updated to the newer state, while the old state is saved locally. Therefore, only the most recent commit transaction 
+can be "executed". To ensure the security of payments, payment channel use a penalty mechanism to: 1) prevent malicious user from closing 
+the channel by sending an outdated but self-advantageous state to the chain, and 2) enable honest user to acquire all the coins locked in the 
+channel when dishonest user post outdated promised transactions. We use the recent work \emph{generalized channels} \colorbox{yellow}{[]} 
+as the basic structure, which split the "committ transaction" into two parts, the commit transaction $TX_c$ responsible for penalizing and 
+the split transaction $TX_s$ that hold the actual output of the channel. assume that Alice wants to pay $x_A \leq \alpha_A$ coins to Bob. 
+To do this, they create new commit transaction $TX_c'$ and split transaction $TX_s'$, at the same time, they pick the new \emph{secret R'} 
+to represent the commitment of the two parties to the new balance of the channel, then they exchange the \emph{revocation secret r} of the 
+of the previous round of transactions $TX_c$ and $TX_s$, after that they make the new commit transaction $TX_c'$ and split transaction $TX_s'$ 
+overwrite previous ones. $TX_s'$ represents the updated balance of the channel, and both parties save the previous 
+round of transactions ($TX_c$ and $TX_s$) with the \emph{revocation secret r} of the secret value in local memory.
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.45]{fig3.png}
+    \caption{Details of generalized channel, $(x_1,\varphi_1)...(x_1,\varphi_1)$ are the states of the channel. The output of $TX_c$ 
+    is three different conditions, two of which are punishment mechanisms used to prevent dishonest users. The condition $\phi_B$ is
+    punishment for B, represents the verification of B’ revocation secret, When A discovers that B submit an old transaction, it can 
+    take all the money in the channel by B' revocation secret, which B has exchanged for A when the old transaction is updated.
+    and in the same way, $\phi_A$ represents the verification of A’ revocation secret that can punish A. The value of $\Delta$ is time upper 
+    bound that takes to publish a transaction on a blockchain.
+     }
+\end{figure}
+
+
+3) \emph{close}: Finally, assume both parties agree to close the channel, They can collaboratively submit $\overline{TX_c}$ and 
+$\overline{TX_s}$, which represent the last transaction they agreed, to the blockchain to close the channel. If the dishonest one 
+submit an expired promised transaction, the malicious party can be penalized by closing the channel through the revocation mechanism unilaterally.
+
 
 \subsection{Payment channel networks}
 
