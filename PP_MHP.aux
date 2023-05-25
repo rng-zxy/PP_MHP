@@ -4,6 +4,8 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}UTXO model}{1}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Left transaction $TX_1$ is recorded on the blockchain, which has two output. Value $\alpha _1$ can spent by A, with a transaction signed w.r.t $PK_A$ after $\emph  {t}_1$ rounds, and the output of value $\alpha _2$ can be spent by a transaction signed w.r.t $PK_A$ and $PK_B$ but only if at least $\emph  {t}_2$ rounds has passed through after the transaction being published on the blockchain. The right transaction $TX_2$ has one input which is the second output of $TX_1$ with the value $\alpha _1$. $TX_2$ has only one output containing $\alpha _3$ coins, which can spent by a transaction whose witness satisfies the condition $\varphi _1 \vee (\varphi _2 \wedge \varphi _3)$}}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Payment channels}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Details of generalized channel, $(x_1,\varphi _1)...(x_1,\varphi _1)$ are the states of the channel. The output of $TX_c$ is three different conditions, two of which are punishment mechanisms used to prevent dishonest users. The condition $\phi _B$ is punishment for B, represents the verification of B’ revocation secret, When A discovers that B submit an old transaction, it can take all the money in the channel by B' revocation secret, which B has exchanged for A when the old transaction is updated. and in the same way, $\phi _A$ represents the verification of A’ revocation secret that can punish A. The value of $\Delta $ is time upper bound that takes to publish a transaction on a blockchain. }}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Payment channel networks}{3}{}\protected@file@percent }
 \citation{b1}
 \citation{b2}
 \citation{b3}
@@ -12,27 +14,25 @@
 \citation{b3}
 \citation{b4}
 \citation{b5}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Details of generalized channel, $(x_1,\varphi _1)...(x_1,\varphi _1)$ are the states of the channel. The output of $TX_c$ is three different conditions, two of which are punishment mechanisms used to prevent dishonest users. The condition $\phi _B$ is punishment for B, represents the verification of B’ revocation secret, When A discovers that B submit an old transaction, it can take all the money in the channel by B' revocation secret, which B has exchanged for A when the old transaction is updated. and in the same way, $\phi _A$ represents the verification of A’ revocation secret that can punish A. The value of $\Delta $ is time upper bound that takes to publish a transaction on a blockchain. }}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Payment channel networks}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {III}Solution Overview}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Security and privacy goals}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Key idea}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Constrution}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Building blocks}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Protocol description}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {V}Analysis}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Security}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}High level functionality description}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Evaluation}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclution}{3}{}\protected@file@percent }
 \citation{b6}
 \bibcite{b1}{1}
 \bibcite{b2}{2}
 \bibcite{b3}{3}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Solution Overview}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Security and privacy goals}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Key idea}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Constrution}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Building blocks}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Protocol description}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Analysis}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Security}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}High level functionality description}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Evaluation}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclution}{4}{}\protected@file@percent }
 \bibcite{b4}{4}
 \bibcite{b5}{5}
 \bibcite{b6}{6}
 \bibcite{b7}{7}
-\@writefile{toc}{\contentsline {section}{References}{4}{}\protected@file@percent }
-\gdef \@abspage@last{4}
+\@writefile{toc}{\contentsline {section}{References}{5}{}\protected@file@percent }
+\gdef \@abspage@last{5}

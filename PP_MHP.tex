@@ -124,9 +124,9 @@ The output consists of two parts,which we represent as a tuple $\theta :=\{cash,
  $\bf TX$.timelock defined as the earliest time a transaction is valid and can be transmitted on the network or added to the blockchain, 
  it defaults to 0 in most transactions. TX.witness$\in\{0,1\}^*$, also called \emph{ScriptSig}, is part of the transaction input to address or satisfy the spending 
  conditions set by the \emph{locking script} on the output. Actually, before being recorded on the blockchain, transactions must go
- through the consensus mechanism of all nodes. During this period, each node will independently verify the transaction. For specific 
- details please refer to \colorbox{yellow}{[]}, we will only briefly describe the key parts: For a transaction(1) The sum of the input value cannot be less 
- than the sum of the output value;(1)For each input, the quoted output cannot exist in any other transaction, it must exist and not 
+ through the consensus mechanism of all nodes. During this period, each node will independently verify the transaction. Transactions need to be verified as follows: 
+ For a transaction(1) The sum of the input value cannot be less 
+ than the sum of the output value;(2)For each input, the quoted output cannot exist in any other transaction, it must exist and not 
  be spent;(3) The \emph{ScriptSig} for each input must be validated against the \emph{locking script} for the corresponding output.
  To put it simply, the transaction must provide valid validation that satisfies the spending conditions of each input.
 
@@ -165,7 +165,7 @@ parties exchange signatures on the commit transaction. Each time a new "commit t
 is overwritten and updated to the newer state, while the old state is saved locally. Therefore, only the most recent commit transaction 
 can be "executed". To ensure the security of payments, payment channel use a penalty mechanism to: 1) prevent malicious user from closing 
 the channel by sending an outdated but self-advantageous state to the chain, and 2) enable honest user to acquire all the coins locked in the 
-channel when dishonest user post outdated promised transactions. We use the recent work \emph{generalized channels} \colorbox{yellow}{[]} 
+channel when dishonest user post outdated promised transactions. We use the recent work \emph{generalized channels} \colorbox{yellow}{[2]} 
 as the basic structure, which split the "committ transaction" into two parts, the commit transaction $TX_c$ responsible for penalizing and 
 the split transaction $TX_s$ that hold the actual output of the channel. assume that Alice wants to pay $x_A \leq \alpha_A$ coins to Bob. 
 To do this, they create new commit transaction $TX_c'$ and split transaction $TX_s'$, at the same time, they pick the new \emph{secret R'} 
@@ -195,13 +195,68 @@ submit an expired promised transaction, the malicious party can be penalized by 
 
 \subsection{Payment channel networks}
 
-The IEEEtran class file is used to format your paper and style the text. All margins, 
-column widths, line spaces, and text fonts are prescribed; please do not 
-alter them. You may note peculiarities. For example, the head margin
-measures proportionately more than is customary. This measurement 
-and others are deliberate, using specifications that anticipate your paper 
-as one part of the entire proceedings, and not as an independent document. 
-Please do not revise any of the current designations.
+Suppose that $U_0$ now wants to transfer some coins to $U_2$, but there is no direct payment channel between $U_0$ and $U_2$, and instead, 
+there is an indirect path in which $U_1$ participates, that is, $U_0$ has a open payment channel with $U_1$, $U_1$ has a open payment 
+channel with $U_2$, then $U_0$ can safely transfer coins to $U_2$ through this path.This way of allowing the atomic transfer of coins 
+from the sender to the receiver through intermediaries atomically called \emph{multi-hop payment} (MHP). A Payment Channel Network (PCN)\colorbox{yellow}{[1]} is 
+a graph consisted of users as the vertices and edges as channels between pairs of users. It can make a large number of single channels 
+connected in series, thus forming an interconnected, vast payment network. Any user on the PCN can pay in MHP through a path of open 
+payment channels. 
+
+\noindent $\bf{HTLC}$   However, in the payment process, there is no way to ensure that each user can perform honestly, and malicious users will 
+cause honest users to lose coins. To guarantee the atomicity of payments, the Lightning Network (LN)\colorbox{yellow}{[3]} is done by 
+using a Hash Time-Lock Contracts (HTLC), which works as follows. In the payment channel of $u_0$ and $u_1$, $u_0$ locks her coins in 
+the output, and this output can be spent on two conditions: 1) beyond the predefined time, $u_0$ will get her money back; 2) once $u_1$ 
+provides a pre-image $r_A$ with a hash value $\mathcal H(r_A)$ set by $u_0$, then $u_1$ can take the money. In a nutshell, sender $u_0$ 
+who wants to pay $\alpha$ coins to the receiver $u_n$ through some intermediary ${\{u_i\}}_{i\in[1,n-1]}$, and two users $u_j$ and $u_{j+1}$ for 
+$j \in [0,n-1]$ have an open payment channel. First, $u_n$ selects a random number $\emph{r}$, calculates its hash $y:= \mathcal H(r)$ 
+and sends $\emph{y}$ to $u_0$. Second, the $u_0$ creates a new state with three outputs $(\theta_1, \theta_2, \theta_3)$ and establishes 
+the HTLC with $u_1$. The value of $\theta_1$ is $\alpha$, $\theta_2$ is the balance of $u_0$ minus $\alpha$ and $\theta_3$ is the balance of $u_1$,
+where $\theta_1$ is the output used by HTLC. HTLC stipulates that once $u_1$ provides a pre-image of $\emph{x}$ such that $y = \mathcal H(x)$, 
+then $u_1$ can take the coins, or return them to $u_0$ if the timeout after $n\cdot T$ has expired. Then $u_1$ repeats this step for her right 
+neighbor $u_2$, again using $\emph{y}$ but decreasing time, which is $(n-1)T$. Repeat this step until the receiver $u_n$ is reached with a 
+timeout of T. This process is called the $\emph{setup phase}$. 
+
+During the $\emph{open phase}$, the receiver $u_n$ can present $\emph{r}$ 
+(the secret value of giving coins to $u_n$ requested in HTLC) to her left neighbor $u_{n-1}$. After that, both parties agree to update their 
+channel to a new state off-chain, and the balance of $u_n$ will increased $\alpha$ coins, or $u_n$ can publish the state on-chain and a transaction 
+with witness $\emph{r}$ spending the money from the HTLC to itself. The other intermediate users use $\emph{r}$ to continue the process, 
+ $u_i$ reveals the secret $\emph{r}$ to its left neighbor $u_{i-1}$ and opens the HTLC. But for this process, enough time needs to be 
+ reserved for $u_{i-1}$ to ask her left neighbor for her coins, otherwise, $u_i$ can claim the money of HTLC by spending the HTLC on-chain 
+ at the last possible moment, due to blockchain latency, user $u_{i-1}$ will notice that too late and will no longer be able to claim HTLC 
+ money from $u_{i-2}$. This is the reason of time-locks on HTLC are interleaved, i.e. increasing from right to left.
+
+ According to the previously mentioned, MHPs done using HTLC requires $\emph{setup phase}$ and $\emph{open phase}$ two rounds of paired 
+ sequential communication, and its collateral lock time is linearly with the path length. As mentioned in \colorbox{yellow}{[4]}, such a 
+ setting may trigger a griefing attack. Secondly, in MHPs, in order to incentivize the intermediary to participate in helping the sender 
+ and receiver complete the payment, an additional fee must be given to the intermediary at each payment. A wormhole attack \colorbox{yellow}{[5]} 
+ allows two colluding users to steal their fees by skipping honest intermediary in payments.
+
+ \noindent $\bf{Blize}$   Blize \colorbox{yellow}{[6]} improves MHPs with a transaction which acts as a global event and a $\emph{pay-unless-revoke}$ 
+ paradigm. On the basis of ensuring security when malicious intermediaries exist, it only requires one round of communication through the 
+ path and constant collateral lock time. Specifically, sender $u_0$ creates a unique global transaction $emph{Enable Refund}$, denoted 
+ by $TX_{er}$. If all channels from $u_0$ to receiver $u_n$ are successfully updated, $u_n$ will send a confirmation to $u_0$, and coins 
+ will naturally be paid to $u_n$ through these updated channels. If any channel update fails (e.g. an intermediary offline), $u_0$ will 
+ publish $TX_{er}$ to the blockchain before the preset time T to trigger all refunds. To achieve this, each party $u_i$ for $i \in [0,n-1]$ 
+ creates an output of $\aleph$ that is spendable in two ways: 1)$u_{i+1}$ claim it after time T, or 2) if $TX_{er}$ is on the blockchain 
+ before time T, the coins can be returned to $u_i$.
+
+ \noindent $\bf{Thora}$   The same idea of global transaction is applied in Thora\colorbox{yellow}{[7]}, but it proceeds logic is reversed of Blize, which is considered 
+ $\emph{revoke-unless-pay}$ paradigm. Thora supports multiple senders and receivers that do not need to be connected to each other, 
+ breaking the path-based topology, and complete atomic updates of arbitrary channels. In this Protocol, each receiver creates her own $TX_{ep}$, the global transaction $\emph{Enable Payment}$, 
+ each $TX_{ep}$ has outputs to all receivers. All receivers send their $TX_{ep}$ to all other parties, and this time each sender creates 
+ one $TX_p$ per $TX_{ep}$. Then, if all channels are updated successfully, the senders can transfer coins to the receivers. If some transfer 
+ fails, the receivers can post $TX_{ep}$ on the chain and force all payments. This allows 1) the sender to return her coins if at least one 
+ channel fails to execute. All refunds possible only if a timeout T (a preset parameter) expires, so all senders can refund 
+ their coins if the coins have not been spent by the receivers after T, and 2) if all payments are successful, the receiver to claim her 
+ coins. For each channel, the sender updates the channel and creates a $TX_p$, which transaction can transfers coins to the receiver 
+ only after $TX_{ep}$ appeared on the blockchaina before time T. If at least one receiver does not receive the coins(channel fails to 
+ execute the paymet), $TX_{ep}$ will be triggered, and all payment transactions will be enforced before time T.
+
+ 
+ 
+ 
+
 
 \section{Solution Overview}
 In this section, we present our key idea.
