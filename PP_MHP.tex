@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
+\usepackage{epstopdf}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -72,22 +73,65 @@ In recent years, permissionless cryptocurrencies, have emerged as a novel means 
 and reliable payments within a decentralized framework, garnering significant attention from both academia and industry. 
 These cryptocurrencies employ a consensus mechanism to verify each transaction, which is
 then recorded on a publicly distributed ledger known as blockchain. Unfortunately, 
-the widespread adoption of cryptocurrencies is hidered by notable scalability chanllenges. Complex consensus mechanisms, like Bitcoin's Proof-of-work(PoW), 
+the widespread adoption of cryptocurrencies is hindered by notable scalability challenges. Complex consensus mechanisms, like Bitcoin's Proof-of-work(PoW), 
 and the limited block size of the blockchain contribute to the issue. The theoretical
 throughput of Bitcoin stands at approximately 10 transactions per second(TPS), with a transaction confirmation time of 
 around 1 hour. In contrast, traditional decentralized payment networks, 
 such as Visa, boast the capability up to 47,000 TPS. Furthermore, the presence of high transaction fees renders small-value 
 payments impractical for cryptocurrency users.
 
-One promising solution proposed to tackle the issue of scalability is the implements of payment channels(PCs).
-PCs are off-chain payment protocols that enable two parties, who have established a channel,to conduct quick and
-validated transaction off-chain. To elaborate, the overrall process can be divided into three phases. Firstly, 
-during the channel-openning phase, both users commit a portion of their coins to a shared address as
-initial funds, which is executed on-chain. In the subsequent channel-updating phase, the involved parties have
-the flexibility to engage in numerous off-chain transactions. They can adjust the allocation of funds between themselves
-by generating and exchanging signed transaction message. Ultimately, when the participants opt to settle the 
+One promising solution proposed to address the scalability issue is the utilization of payments channels(PCs), which
+facilitate quick and validated transactions between two parties off-chain. In a nutshell, a payment channel 
+is represented as a multi-signature address on the blockchain, with both parties initially
+depositing a certain amount of funds. Subsequently, during each transaction, the parties adjust the fund allocation by 
+generating and exchanging signed transaction messages off-chain. When the participants decide to settle the 
 channel or encounter a dispute, they initiate the closing process by broadcasting the latest signed transaction
-to the blockchain. This transaction represents the most up-to-date distribution of funds within the channel.
+to the blockchain. 
+
+However, this straightforward construction forces users to establish a separate payment channel with each
+potential transaction partner and lock coins for each one. Additionally, these coins cannot be used for other
+things until the channel is closed. Payment channel network(PCN) mitigates this issue by enabling transactions between two users who do not share a
+direct payment channel. This is achieved through multi-hop payments(MHP) by leveraging intermediaries
+and payment channels within the PCN. 
+
+\subsection{PCN based on HTLC and some limitations}
+Currently, the most renowned and valuable PCN system is the Lightning Network(LN), which is implemented on 
+the Bitcoin. To guarantee the security and atomicity of multi-hop payments, LN employs a specialized mechanism called
+hash timed-locked contracts(HTLCs). The HTLC mechanism involves two phases. In the locking phase, coins are locked in each 
+channel using a hash chosen by the receiver from the left to right. In the subsequent release phase, the receiver present the preimage of the hash
+value he initially selected to unlock coins and all the intermediaries can claim coins by providing the same preimage. An example of a MHP based
+HTLC is shown in figure 1. Unfortunately, PCNs based on HTLC have the following fundamental problems.
+
+\begin{figure}[b]
+    \centering
+    \includegraphics[scale=0.2]{fig.eps}
+    \caption{An MHP from Alice to Bob for value $\alpha$ coins using HTLC contracts. A HTLC contract denotes as 
+    HTLC(A, B, $h, \alpha, t$) means:(i)If B can present a value $r$ such that $\mathcal{H}(r)=h$ before timeout $t$,
+    A pays $\alpha$ coins to B.(ii)If timeout $t$ expires, A gets back the $\alpha$ locked coins}
+\end{figure}
+
+\textbf{Collateral} To ensure the atomic execution of MHP, each HTLC needs to specify an expiration time(also called collateral time) for the locked 
+coins. Once time expires, the locked coins will be returned to the user on the left side of the channel. Moreover, the collateral time increases gradually
+from left to right in a staggered fashion. Assuming $\alpha$ coins are being paid through $\emph{n}$ PCs, the collateral time for 
+PC $\emph{i}$ is $\emph{t}_{\emph{i}}\geq\emph{t}_{\emph{i}}+\Delta$, $\emph{i}=1,2,\cdots ,\emph{n}$, $\Delta$ denotes
+the maximum duration between when a transaction is broadcast and when it is confirmed transaction by the blockchain. This staggered manner
+ensures that each user has enough time to await the timely update of his right channel and expeditiously broadcast the state of his left channel to
+the blockchain, regardless of whether the counterparty cooperates. 
+
+While this mechanism effectively prevent honest users losing coins, it is essential to note that the overall collateral for the entire payment path 
+is $\Theta \left ( \emph{n}^{2}\cdot \alpha\cdot  \Delta  \right )$ in the worst-case scenario in units $ \emph{coins}\times \emph{time}$. 
+In the event of a failure of the MHP where all coins are returned, users cannot receive any benefit but incur potential financial
+losses. This is due to the fact that the locked coins cannot be utilized for other transactions during this period. Furthermore, the high 
+volatility of cryptocurrency prices can exacerbate these economic losses, further magnifying the impact on users' financial well-being. 
+Simultaneously, it is crucial to acknowledge that this issue is not limited to the HTLC mechanism alone, but rather
+applies to all multi-hop payments protocols within two-phase communication$\left [ \textbf{Blitz} \right ]$. 
+
+\textbf{Anonymity} Despite the employment of onion routing $\left [ \textbf{Onion routing} \right ]$ for anonymity in the LN, it is important
+to be aware that the information contained in HTLCs can inadvertently expose details about payment path. In our analysis,
+we examine the inherent limitations of the HTLC mechanism regarding anonymity from both \textit{off-chain} and \textit{on-chain}
+perspectives. These aspects are critical consideration for the development of proposed PCNs.
+
+
 
 \section{Background}
 In this section, we provide an overview on the background and the
@@ -95,13 +139,13 @@ notations used throughout the paper.
 \subsection{UTXO model}
 
 In this work, we assume the underlying blockchain, like Bitcoin, is based on the UTXO model. Transaction output is the fundamental 
-component of Bitcoin transaction,which is an indivisible Bitcoin currency recorded on the blockchain and recognized as valid by 
+component of Bitcoin transaction, which is an indivisible Bitcoin currency recorded on the blockchain and recognized as valid by 
 the entire network. The Bitcoin complete nodes tracks all available outputs called \emph{unspent transaction outpus} (UTXO). 
 UTXOs can be any value and once generated are indivisible, a UTXO can only be consumed as a whole in a single transaction. 
-The output consists of two parts,which we represent as a tuple $\theta :=\{cash,\phi\}, \theta.cash$ is the output value,
+The output consists of two parts, which we represent as a tuple $\theta :=\{cash,\phi\}, \theta.cash$ is the output value,
  and the $\theta.\phi$ is the condition to spend this output, it also called \emph{locking script}. Onesig(\emph{U}) indicates 
  that the condition required to spend this output is a digital signature. We say that a user \emph{U} can spend an output only if
- $\theta.\phi$ contains only a signature w.r.t verification \emph{U}'s public key, if multiple signatures are required, we use 
+ $\theta.\phi$ contains only a signature w.r.t verification  \emph{U}'s public key, if multiple signatures are required, we use 
  MultiSig($\it U_1,U_2,...,U_n$).
 
  %插图
