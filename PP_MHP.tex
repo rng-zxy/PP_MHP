@@ -104,10 +104,10 @@ HTLC is shown in figure 1. Unfortunately, PCNs based on HTLC have the following 
 
 \begin{figure}[b]
     \centering
-    \includegraphics[scale=0.2]{fig.eps}
+    \includegraphics[scale=0.35]{htlc.pdf}
     \caption{An MHP from Alice to Bob for value $\alpha$ coins using HTLC contracts. A HTLC contract denotes as 
-    HTLC(A, B, $h, \alpha, t$) means:(i)If B can present a value $r$ such that $\mathcal{H}(r)=h$ before timeout $t$,
-    A pays $\alpha$ coins to B.(ii)If timeout $t$ expires, A gets back the $\alpha$ locked coins}
+    HTLC(X, Y, $h, \alpha, t$) means:(i)If Y can present a value $r$ such that $\mathcal{H}(r)=h$ before timeout $t$,
+    X pays $\alpha$ coins to Y.(ii)If timeout $t$ expires, X gets back the $\alpha$ locked coins}
 \end{figure}
 
 \textbf{Collateral} To ensure the atomic execution of MHP, each HTLC needs to specify an expiration time(also called collateral time) for the locked 
@@ -124,9 +124,9 @@ In the event of a failure of the MHP where all coins are returned, users cannot 
 losses. This is due to the fact that the locked coins cannot be utilized for other transactions during this period. Furthermore, the high 
 volatility of cryptocurrency prices can exacerbate these economic losses, further magnifying the impact on users' financial well-being. 
 Simultaneously, it is crucial to acknowledge that this issue is not limited to the HTLC mechanism alone, but rather
-applies to all multi-hop payments protocols within two-phase communication$\left [ \textbf{Blitz} \right ]$. 
+applies to all multi-hop payments protocols within two-phase communication\colorbox{yellow}{[Blitz]}. 
 
-\textbf{Anonymity} Despite the employment of onion routing $\left [ \textbf{Onion routing} \right ]$ for anonymity in the LN, it is important
+\textbf{Anonymity} Despite the employment of onion routing \colorbox{yellow}{[Onion routing]} for anonymity in the LN, it is important
 to be aware that the information contained in HTLCs can inadvertently expose details about payment path. In our analysis,
 we examine the inherent limitations of the HTLC mechanism regarding anonymity from both \textit{off-chain} and \textit{on-chain}
 perspectives. These aspects are critical consideration for the development of proposed PCNs.
