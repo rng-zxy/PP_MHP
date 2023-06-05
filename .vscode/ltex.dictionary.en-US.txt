@@ -1,0 +1,6 @@
+permissionless
+atomicity
+HTLCs
+PCNs
+UTXO
+UTXOs
