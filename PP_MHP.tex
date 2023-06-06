@@ -8,16 +8,19 @@
 \usepackage{epstopdf}
 \usepackage{textcomp}
 \usepackage{xcolor}
+
+%图片路径
+\graphicspath{{figure/}}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Privacy-Preserving Multi-hop Payments with Constant Collateral\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
-}
 
+%标题
+\title{Privacy-Preserving Multi-hop Payments with Constant Collateral}
+
+%作者
 \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
 \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
 \textit{name of organization (of Aff.)}\\
@@ -29,37 +32,14 @@ email address or ORCID}
 \textit{name of organization (of Aff.)}\\
 City, Country \\
 email address or ORCID}
-\and
-\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{6\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
 }
 
 \maketitle
 
+
+%正文
 \begin{abstract}
 This document is a model and instructions for \LaTeX.
-Test for pull.
 This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
 or Math in Paper Title or Abstract.
 \end{abstract}
@@ -124,7 +104,7 @@ In the event of a failure of the MHP where all coins are returned, users cannot 
 losses. This is due to the fact that the locked coins cannot be utilized for other transactions during this period. Furthermore, the high 
 volatility of cryptocurrency prices can exacerbate these economic losses, further magnifying the impact on users' financial well-being. 
 Simultaneously, it is crucial to acknowledge that this issue is not limited to the HTLC mechanism alone, but rather
-applies to all multi-hop payments protocols within two-phase communication\colorbox{yellow}{[Blitz]}. 
+applies to all multi-hop payments protocols within two-phase communication \cite{aumayr2021blitz}. 
 
 \textbf{Anonymity} Despite the employment of onion routing \colorbox{yellow}{[Onion routing]} for anonymity in the LN, it is important
 to be aware that the information contained in HTLCs can inadvertently expose details about payment path. In our analysis,
@@ -210,7 +190,7 @@ is overwritten and updated to the newer state, while the old state is saved loca
 can be "executed". To ensure the security of payments, payment channel use a penalty mechanism to: 1) prevent malicious user from closing 
 the channel by sending an outdated but self-advantageous state to the chain, and 2) enable honest user to acquire all the coins locked in the 
 channel when dishonest user post outdated promised transactions. We use the recent work \emph{generalized channels} \colorbox{yellow}{[2]} 
-as the basic structure, which split the "committ transaction" into two parts, the commit transaction $TX_c$ responsible for penalizing and 
+as the basic structure, which split the "commit transaction" into two parts, the commit transaction $TX_c$ responsible for penalizing and 
 the split transaction $TX_s$ that hold the actual output of the channel. assume that Alice wants to pay $x_A \leq \alpha_A$ coins to Bob. 
 To do this, they create new commit transaction $TX_c'$ and split transaction $TX_s'$, at the same time, they pick the new \emph{secret R'} 
 to represent the commitment of the two parties to the new balance of the channel, then they exchange the \emph{revocation secret r} of the 
@@ -365,36 +345,8 @@ Conclude the paper.
 
 \section*{References}
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+\bibliographystyle{IEEtran}
 
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English.
-citation first, followed by the original foreign-language citation \cite{b6}.
-
-\begin{thebibliography}{99}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
-\vspace{12pt}
-\color{red}
-IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
+\bibliography{ref}
 
 \end{document}

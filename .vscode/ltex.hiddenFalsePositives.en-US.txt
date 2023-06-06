@@ -1,2 +1,3 @@
 {"rule":"DOUBLE_PUNCTUATION","sentence":"^\\QA HTLC contract denotes as HTLC(A, B, \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, , \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q) means:(i)if B can present a value r such that before tmieout t,\\E$"}
 {"rule":"EN_A_VS_AN","sentence":"^\\QA MHP from Alice to Bob for value coins using HTLC contracts.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcomponent, formatting, style, styling, insert\\E$"}
