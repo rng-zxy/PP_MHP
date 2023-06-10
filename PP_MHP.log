@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.11)  10 JUN 2023 16:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.11)  10 JUN 2023 18:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -304,7 +304,7 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
  (d:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 2376) in paragraph at lines 51--55
+Underfull \hbox (badness 2376) in paragraph at lines 49--59
 []\OT1/ptm/m/n/10 In re-cent years, per-mis-sion-less cryp-tocur-ren-cies, have
  []
 
@@ -314,28 +314,31 @@ pdfTeX warning: pdflatex.exe (file ./figure//htlc.pdf): PDF inclusion: found PDF
 <figure//htlc.pdf, id=1, 712.22084pt x 162.96886pt>
 File: figure//htlc.pdf Graphic file (type pdf)
 <use figure//htlc.pdf>
-Package pdftex.def Info: figure//htlc.pdf  used on input line 68.
+Package pdftex.def Info: figure//htlc.pdf  used on input line 84.
 (pdftex.def)             Requested size: 249.28102pt x 57.03995pt.
 [1{d:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2023/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
  <./figure//htlc.pdf>]
-<figure//fig2.png, id=42, 487.22025pt x 171.64125pt>
+<figure//fig2.png, id=44, 487.22025pt x 171.64125pt>
 File: figure//fig2.png Graphic file (type png)
 <use figure//fig2.png>
-Package pdftex.def Info: figure//fig2.png  used on input line 95.
+Package pdftex.def Info: figure//fig2.png  used on input line 132.
 (pdftex.def)             Requested size: 243.60953pt x 85.8204pt.
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 100.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 143.
  (d:/texlive/2023/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 100.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 143.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
  [2 <./figure//fig2.png>]
 <figure//fig3.png, id=57, 539.616pt x 199.34476pt>
 File: figure//fig3.png Graphic file (type png)
 <use figure//fig3.png>
-Package pdftex.def Info: figure//fig3.png  used on input line 121.
+Package pdftex.def Info: figure//fig3.png  used on input line 206.
 (pdftex.def)             Requested size: 242.82495pt x 89.7043pt.
  [3 <./figure//fig3.png>] [4]
 
@@ -353,15 +356,15 @@ Before submitting the final camera ready copy, remember to:
 
 ] (./PP_MHP.aux) ) 
 Here is how much of TeX's memory you used:
- 4921 strings out of 476025
- 79115 string characters out of 5794015
+ 4924 strings out of 476025
+ 79145 string characters out of 5794015
  1870382 words of memory out of 5000000
- 25284 multiletter control sequences out of 15000+600000
+ 25287 multiletter control sequences out of 15000+600000
  561771 words of font info for 137 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,62p,1292b,331s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,11n,62p,836b,331s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on PP_MHP.pdf (5 pages, 277465 bytes).
+Output written on PP_MHP.pdf (5 pages, 276344 bytes).
 PDF statistics:
  147 PDF objects out of 1000 (max. 8388607)
  78 compressed objects within 1 object stream
