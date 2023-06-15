@@ -2,3 +2,7 @@
 {"rule":"EN_A_VS_AN","sentence":"^\\QA MHP from Alice to Bob for value coins using HTLC contracts.\\E$"}
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcomponent, formatting, style, styling, insert\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QDanezis and I. Goldberg, “Sphinx: A Compact and Provably Secure Mix Format,” in IEEE S P, 2009.\\E$"}
+{"rule":"PHRASE_REPETITION","sentence":"^\\QGriefing attack Griefing attack is an open issue in the blockchain community.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QPoon and T. Dryja, The Bitcoin Lighting Network: Scalable Off-Chain Instant Payments, Draft version 0.5.9.2, available at https://lightning.network/lightningnetwork-paper.pdf.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QPoon and T. Dryja, The Bitcoin Lighting Network: Scalable Off-Chain Instant Payments, Draft version 0.5.9.2, available at https://lightning.network/lightningnetwork-paper.pdf.\\E$"}
+{"rule":"EN_WORD_COHERENCY","sentence":"^\\QAumayr et al, “Generalized Channels from Limited Blockchain Scripts and Adaptor Signatures”\\E$"}

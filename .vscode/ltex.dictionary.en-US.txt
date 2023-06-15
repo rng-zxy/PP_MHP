@@ -4,3 +4,9 @@ HTLCs
 PCNs
 UTXO
 UTXOs
+griefing
+Poon
+Dryja
+Yorozu
+Camenisch
+ZCash

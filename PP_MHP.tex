@@ -20,7 +20,7 @@
 \begin{document}
 
 % 标题
-\title{Privacy-Preserving Multi-hop Payments with Constant Collateral}
+\title{Anonymous Multi-hop Payments with Constant Collateral}
 
 % 作者
 \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
@@ -71,7 +71,7 @@ between two users who do not share a direct payment channel. This is achieved th
 by leveraging intermediaries and payment channels within the PCN.
 
 \subsection{PCN based on HTLC and some limitations}
-Currently, the most renowned and valuable PCN system is the Lightning Network(LN), which is implemented on 
+Currently, the most renowned and valuable PCN system is the Lightning Network(LN) \cite{ln}, which is implemented on 
 the Bitcoin. To guarantee the security and atomicity of multi-hop payments, LN employs a specialized mechanism 
 called hash timed-locked contracts(HTLCs). The HTLC mechanism involves two phases. In the locking phase, coins 
 are locked in each channel using a hash chosen by the receiver from the left to right. In the subsequent release 
@@ -105,10 +105,74 @@ prices can exacerbate these economic losses, further magnifying the impact on us
 Simultaneously, it is crucial to acknowledge that this issue is not limited to the HTLC mechanism alone, 
 but rather applies to all multi-hop payments protocols within two-phase communication \cite{blitz}. 
 
+\textbf{Griefing attack} The griefing attack \cite{amcu} is an open issue in the blockchain community, representing
+the worst case of problems arising from collateral. In this attack, a malicious user initiates a MHP to another node 
+under his control. Subsequently, the malicious user can intentionally lock $\left ( \emph{n}-1 \right )\ast \alpha $
+coins using only $\alpha$ coins. The receiver simply initiate a standard refund process once the time expires. 
+Intermediaries will perceive it as a failed MHP. However, this attack carries significant consequences due to the 
+amplification factor $\emph{n}$. Moreover, it results in substantial losses, particularly in multi-path payment 
+scenarios. 
+
 \textbf{Anonymity} Despite the employment of onion routing \cite{onion routing}, \cite{sphinx} for anonymity in 
 the LN, it is important to be aware that the information contained in HTLCs can inadvertently expose details 
-about payment path. In our analysis, we examine the inherent limitations of the HTLC mechanism regarding anonymity 
+about payment path. We examine the inherent limitations of the HTLC mechanism regarding anonymity 
 from both \textit{off-chain} and \textit{on-chain} perspectives. 
+
+When \textit{off-chain}, the use of the same hash value during lock phase or the same preimage during the release phase, 
+which is shared among intermediaries, can enable colluding intermediaries to identify their participation in the 
+same MHP. This knowledge can potentially facilitate the aggregation of information about the sender and receiver, 
+thereby compromising the privacy of the MHP. 
+
+When \textit{on-chain}, where dispute may arise or intermediaries may desire to close their PCs, transactions 
+containing HTLC scripts are recorded on the blockchain. Similar to off-chain case, these HTLC scripts reveal the 
+existence of a MHP to other blockchain users who are not involved in the MHP. Furthermore, these observers can 
+trace the entire payment path and deduce the identities of the receiver and receiver.
+
+In practice, malicious users may employ attacks to gather transaction information from their competitors, leading to 
+unfair competition. Nevertheless, due to the inherent nature of MHP, concealing the transaction amount is a very 
+difficult task, rendering the protection of the identities of two participants to the payment a significant issue. 
+
+
+\textbf{Wormhole attack} Using the same value along a particular path not only compromise anonymity, but also exposes 
+vulnerabilities to wormhole attacks \cite{amhl}, leading to financial losses for honest intermediaries. Colluding nodes 
+can bypass intermediaries during the release phase and share the preimage, resulting in the theft of the intermediaries' 
+fees. The intermediaries would mistakenly perceive this as a failed MHP, while in reality, the MHP succeeds as the 
+sender pays the coins and the receiver did get them. Certainly, the greater the number of intermediaries between colluding 
+nodes, the higher the potential for fee theft.
+
+\subsection{Related work}
+Currently, several interesting solutions have been proposed to tackle the aforementioned issues. Nonetheless, these solutions 
+still exhibit certain deficiencies that need to be addressed.
+
+Green and Miers introduced Bolt \cite{bolt}, an anonymous payments protocol based on hub relying on ZCash \cite{zerocash} cryptographic 
+primitives. Several hub-based protocols, including TumbleBit \cite{tumblebit}, $A^{2}L$ \cite{a2l}, BlindHub \cite{blindhub}, have demonstrated 
+properties such as anonymity, compatibility and value privacy. However, Payments Channel Hub(PCH) protocols are currently 
+limited to single intermediary and two-hop payments and expanding them to perform generalized multi-hop payments remains a 
+significant challenge.
+
+Malavolta et al. presented \cite{mhtlc}, which enables anonymous payments by leveraging zero-knowledge proofs and explores 
+the concurrency and congestion control mechanism of HTLC. Anonymous multi-hop locks(AMHL) \cite{amhl} is a novel cryptographic 
+primitive designed to prevent wormhole attacks. It incorporates the concept of adaptor signature \cite{gc}, enabling 
+the release of the lock with a specific complete signature. Both aforementioned approaches achieve a property of \textit{relational anonymity}, 
+means that  two concurrent transactions cannot be distinguished as long as they share at least one honest intermediary. Unfortunately, they 
+still suffer from linear collateral because they employ a two-phase communication similar to HTLC. 
+
+Sprites \cite{sprites} and State channels \cite{sc} are protocols achieve constant collateral for MHP. However, they require 
+Turing complete scripts for the blockchain(available in e.g. Ethereum). AMCU \cite{amcu} is the first multi-channel update protocol that achieves 
+constant collateral and is compatible with Bitcoin. However, it relies on building two global transactions and has to reveal the identities 
+of all participants. Blitz \cite{blitz} presents a one-phase communication MHP which achieves constant collateral. Unlike AMCU, Blitz only 
+needs one global transaction. Additionally, Blitz utilizes stealth address \cite{stadd} to protect the identities of participants for anonymity. Nevertheless, 
+the global transaction is similar to a hash value in the HTLC mechanism, which unfortunately allows colluding nodes to uncover the 
+complete payment path. Furthermore, \cite{astrape} the implementation of stealth address presents flaws and lacks universal applicability. 
+Throa \cite{th} adopts a similar protocol to Blitz, leveraging constant collateral and extending a single MHP to multiple 
+topological payment paths, such as a star topology. But it is noting that Throa suffers from the same challenges as Blitz.
+
+Indeed, implementing a MHP with constant collateral while ensuring anonymity within a blockchain that has a limited scripting language, 
+such as Bitcoin, is an intriguing and practical problem.
+
+\subsection{Our contribution}
+In this work, we present an anonymous multi-hop payment protocol that achieves constant collateral and can be compatible wit Bitcoin. 
+Additionally, our protocol is designed to .We implemented it and evaluated its performance.
 
 \section{Background}
 In this section, we provide an overview on the background and the notations used throughout the paper.
@@ -117,7 +181,7 @@ In this section, we provide an overview on the background and the notations used
 In this work, we assume the underlying blockchain, like Bitcoin, is based on the UTXO model. Transaction output is 
 the fundamental component of Bitcoin transaction, which is an indivisible Bitcoin currency recorded on the blockchain 
 and recognized as valid by the entire network. The Bitcoin complete nodes tracks all available outputs called 
-\emph{unspent transaction outpus} (UTXO). UTXOs can be any value and once generated are indivisible, a UTXO can only 
+\emph{unspent transaction outputs} (UTXO). UTXOs can be any value and once generated are indivisible, a UTXO can only 
 be consumed as a whole in a single transaction. The output consists of two parts, which we represent as a 
 tuple $\theta :=\{cash,\phi\}, \theta.cash$ is the output value, and the $\theta.\phi$ is the condition to spend 
 this output, it also called \emph{locking script}. Onesig(\emph{U}) indicates that the condition required to 
@@ -327,8 +391,23 @@ citation first, followed by the original foreign-language citation \cite{b6}.
 \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
 \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
 \bibitem{blitz} L. Aumayr, P. Moreno-Sanchez, A. Kate, and M. Maffei, ``Blitz:Secure Multi-Hop Payments Without Two-Phase Commmits,'' in \textit{USENIX Security}, 2021.
-\bibitem{onion routing} J. Camenisch and A.~Lysyanskaya, ``A formal treatment of onion routing,'' in \textit{CRYRTO}, 2005, pp. 169-187. 
+\bibitem{onion routing} J. Camenisch and A. Lysyanskaya, ``A formal treatment of onion routing,'' in \textit{CRYRTO}, 2005, pp. 169-187. 
 \bibitem{sphinx} G. Danezis and I. Goldberg, ``Sphinx: A Compact and Provably Secure Mix Format,'' in \textit{IEEE S\&P}, 2009. 
+\bibitem{amcu} C. Egger, P. Moreno-Sanchez and M. Maffei, ``Atomic Multi-Channel Updates with Constant Collateral in Bitcoin-Compatible Payment-Channel Networks,'' in \textit{ACM CCS}, 2019, pp. 801-815.
+\bibitem{amhl} G. Malavolta, P. Moreno-Sanchez, A. Kate, M. Maffei and S. Ravi, ``Anonymous Multi-Hop Locks for Blockchain Scalability and Interoperability,'' in \textit{NDSS}, 2019.
+\bibitem{ln} J. Poon and T. Dryja, \textit{The Bitcoin Lighting Network: Scalable Off-Chain Instant Payments}, Draft version 0.5.9.2, available at https://lightning.network/lightningnetwork-paper.pdf. Jan. 2016. 
+\bibitem{bolt} M. Green and I. Miers, ``Bolt: Anonymous payment channels for decentralized currencies,'' in \textit{ACM CCS}, 2017. 
+\bibitem{zerocash} E. Ben-Sasson, A. Chiesa, C. Garman, M. Green, I. Miers, E. Tromer, and M. Virza, ``Zerocash: Decentralized anonymous payments from bitcoin,'' in \textit{IEEE S\&P}, 2014.
+\bibitem{tumblebit} E. Heilman, L. Alshenibr, F. Baldimtsi, A. Scafuro, and S. Goldberg, ``TumbleBit: An untrusted bitcoin-compatible anonymous payment hub,'' in \textit{NDSS}, 2017.
+\bibitem{a2l} E. Tairi, P. Moreno-Sanchez, and M. Maffei. ``$A^{2}L$: Anonymous Atomic Locks for Scalability in Payment Channel Hubs,'' in \textit{IEEE S\&P}, 2021.
+\bibitem{blindhub} X. Qin, S. Pan, A. Mirzaei, Z. Sui, O. Ersoy, A. Sakzad, M. Esgin, J. Liu, J. Yu and T. Yuen, ``BlindHub: Bitcoin-Compatible Privacy-Preserving Payment Channel Hubs Supporting Variable Amounts," in \textit{IEEE S\&P}, 2023.
+\bibitem{mhtlc} G. Malavolta, P. Moreno-Sanchez, A. Kate, M. Maffei and S. Ravi, ``Concurrency and Privacy with Payment-Channel Networks,'' in \textit{ACM CCS}, 2017.
+\bibitem{gc} L. Aumayr et al, ``Generalized Channels from Limited Blockchain Scripts and Adaptor Signatures,'' in \textit{ASIACRYPT}, 2021.
+\bibitem{sprites} A. Miller, I. Bentov, R. Kumaresan and P. McCorry, ``Sprites: Payment Channels that Go Faster than Lightning,'' in \textit{FC}, 2019. 
+\bibitem{sc} S. Dziembowski, L. Eckey, S. Faust, J. Hesse and K. Hostáková, ` Multi-party Virtual State Channels,'' in \textit{EUROCRYPT}, 2019.
+\bibitem{astrape} Y. Dong, I. Goldberg, S. Gorbunov and R. Boutaba, ``Astrape: Anonymous Payment Channels with Boring Cryptography,'' in \textit{ACNS}, 2022.
+\bibitem{stadd} N. Saberhagen, Cryptonote v 2.0, 2018, https://cryptonote:org/whitepaper.  
+\bibitem{thora} L. Aumayr, K. Abbaszadeh and M. Maffei, ``Thora:Atomic and Privacy-Preserving Multi-Channel Updates,'' in \textit{ACM CCS}, 2022.
 \end{thebibliography}
 
 \end{document}
