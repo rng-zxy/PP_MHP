@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.11)  15 JUN 2023 17:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.11)  20 JUN 2023 12:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -321,38 +321,38 @@ Package pdftex.def Info: figure//htlc.pdf  used on input line 84.
 
  <./figure//htlc.pdf>]
 
-LaTeX Warning: Citation `th' on page 2 undefined on input line 167.
+LaTeX Warning: Citation `th' on page 2 undefined on input line 166.
 
 [2]
 <figure//fig2.png, id=47, 487.22025pt x 171.64125pt>
 File: figure//fig2.png Graphic file (type png)
 <use figure//fig2.png>
-Package pdftex.def Info: figure//fig2.png  used on input line 195.
+Package pdftex.def Info: figure//fig2.png  used on input line 203.
 (pdftex.def)             Requested size: 243.60953pt x 85.8204pt.
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 206.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 214.
  (d:/texlive/2023/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 206.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 214.
  [3 <./figure//fig2.png>]
 <figure//fig3.png, id=60, 539.616pt x 199.34476pt>
 File: figure//fig3.png Graphic file (type png)
 <use figure//fig3.png>
-Package pdftex.def Info: figure//fig3.png  used on input line 269.
+Package pdftex.def Info: figure//fig3.png  used on input line 277.
 (pdftex.def)             Requested size: 242.82495pt x 89.7043pt.
  [4 <./figure//fig3.png>] [5]
-Underfull \hbox (badness 1990) in paragraph at lines 398--399
+Underfull \hbox (badness 1990) in paragraph at lines 406--407
 []\OT1/ptm/m/n/8 J. Poon and T. Dryja, \OT1/ptm/m/it/8 The Bit-coin Light-ing Net-work: Scal-able
  []
 
 
-Underfull \hbox (badness 3884) in paragraph at lines 398--399
+Underfull \hbox (badness 3884) in paragraph at lines 406--407
 \OT1/ptm/m/it/8 Off-Chain In-stant Pay-ments\OT1/ptm/m/n/8 , Draft ver-sion 0.5.9.2, avail-able at
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 409--410
+Underfull \hbox (badness 10000) in paragraph at lines 417--418
 []\OT1/ptm/m/n/8 N. Saber-ha-gen, Cryptonote v 2.0, 2018,
  []
 
@@ -377,13 +377,13 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  4941 strings out of 476025
  79262 string characters out of 5794015
- 1871382 words of memory out of 5000000
+ 1870382 words of memory out of 5000000
  25304 multiletter control sequences out of 15000+600000
  561771 words of font info for 137 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,62p,836b,331s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/texlive/2023/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on PP_MHP.pdf (6 pages, 286212 bytes).
+Output written on PP_MHP.pdf (6 pages, 286526 bytes).
 PDF statistics:
  150 PDF objects out of 1000 (max. 8388607)
  80 compressed objects within 1 object stream

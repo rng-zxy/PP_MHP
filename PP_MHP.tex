@@ -132,13 +132,18 @@ In practice, malicious users may employ attacks to gather transaction informatio
 unfair competition. Nevertheless, due to the inherent nature of MHP, concealing the transaction amount is a very 
 difficult task, rendering the protection of the identities of two participants to the payment a significant issue. 
 
-
 \textbf{Wormhole attack} Using the same value along a particular path not only compromise anonymity, but also exposes 
 vulnerabilities to wormhole attacks \cite{amhl}, leading to financial losses for honest intermediaries. Colluding nodes 
 can bypass intermediaries during the release phase and share the preimage, resulting in the theft of the intermediaries' 
 fees. The intermediaries would mistakenly perceive this as a failed MHP, while in reality, the MHP succeeds as the 
 sender pays the coins and the receiver did get them. Certainly, the greater the number of intermediaries between colluding 
 nodes, the higher the potential for fee theft.
+
+\textbf{HTLC scripts} MHP protocols based on the HTLC mechanism, relies on the scripting capabilities of the underlying 
+blockchain to support specific functionalities. These functionalities primarily involve hash function and time locks. 
+However, it is evident that certain cryptocurrencies with limited or scriptless capabilities cannot implement these protocols. 
+For instance, Stellar and Ripple solely support digital signatures and time locks, while Monero and ZCash only enable 
+digital signatures. 
 
 \subsection{Related work}
 Currently, several interesting solutions have been proposed to tackle the aforementioned issues. Nonetheless, these solutions 
@@ -167,12 +172,21 @@ complete payment path. Furthermore, \cite{astrape} the implementation of stealth
 Throa \cite{th} adopts a similar protocol to Blitz, leveraging constant collateral and extending a single MHP to multiple 
 topological payment paths, such as a star topology. But it is noting that Throa suffers from the same challenges as Blitz.
 
-Indeed, implementing a MHP with constant collateral while ensuring anonymity within a blockchain that has a limited scripting language, 
+Indeed, implementing a MHP with constant collateral while ensuring anonymity within a cryptocurrency that has a limited scripting language, 
 such as Bitcoin, is an intriguing and practical problem.
 
 \subsection{Our contribution}
-In this work, we present an anonymous multi-hop payment protocol that achieves constant collateral and can be compatible wit Bitcoin. 
-Additionally, our protocol is designed to .We implemented it and evaluated its performance.
+$\cdot$ We present AMHP, a multi-hop payment protocol that achieves constant collateral with one-phase communication and enables 
+relationship anonymity in the presence of malicious intermediaries. Additionally, the AMHP protocol offers comprehensive protection 
+against wormhole attacks while effectively mitigating the impact of griefing attacks. 
+
+$\cdot$ We demonstrate the compatibility of the AMHP protocol with Bitcoin and its potential deployment in other non-Turing-complete 
+cryptocurrencies. This is achievable due to its reliance on only signatures and time-locks.
+
+$\cdot$ We implemented it and evaluated its performance. The AMHP protocol efficiently utilizes relative time locks, 
+resulting in a smaller script size compared to traditional HTLC implementations.
+
+
 
 \section{Background}
 In this section, we provide an overview on the background and the notations used throughout the paper.
@@ -320,7 +334,7 @@ a setting may trigger a griefing attack. Secondly, in MHPs, in order to incentiv
 and receiver complete the payment, an additional fee must be given to the intermediary at each payment. A wormhole attack \colorbox{yellow}{[5]} 
 allows two colluding users to steal their fees by skipping honest intermediary in payments.
 
-\noindent $\bf{Blize}$   Blize \colorbox{yellow}{[6]} improves MHPs with a transaction which acts as a global event and a 
+\noindent $\bf{Blize}$   Blitz \cite{blitz} achieves constant collateral with a transaction which acts as a global event and a 
 $\emph{pay-unless-revoke}$ paradigm. On the basis of ensuring security when malicious intermediaries exist, it only requires 
 one round of communication through the path and constant collateral lock time. Specifically, sender $u_0$ creates a unique global 
 transaction $emph{Enable Refund}$, denoted by $TX_{er}$. If all channels from $u_0$ to receiver $u_n$ are successfully updated, $u_n$ 
@@ -329,21 +343,10 @@ fails (e.g. an intermediary offline), $u_0$ will publish $TX_{er}$ to the blockc
 To achieve this, each party $u_i$ for $i \in [0,n-1]$ creates an output of $\aleph$ that is spendable in two ways: 1)$u_{i+1}$ claim it 
 after time T, or 2) if $TX_{er}$ is on the blockchain before time T, the coins can be returned to $u_i$.
 
-\noindent $\bf{Thora}$   The same idea of global transaction is applied in Thora\colorbox{yellow}{[7]}, but it proceeds logic is reversed 
-of Blize, which is considered $\emph{revoke-unless-pay}$ paradigm. Thora supports multiple senders and receivers that do not need to be 
-connected to each other, breaking the path-based topology, and complete atomic updates of arbitrary channels. In this Protocol, each 
-receiver creates her own $TX_{ep}$, the global transaction $\emph{Enable Payment}$, each $TX_{ep}$ has outputs to all receivers. 
-All receivers send their $TX_{ep}$ to all other parties, and this time each sender creates one $TX_p$ per $TX_{ep}$. Then, if all 
-channels are updated successfully, the senders can transfer coins to the receivers. If some transfer fails, the receivers can post 
-$TX_{ep}$ on the chain and force all payments. This allows 1) the sender to return her coins if at least one channel fails to execute. 
-All refunds possible only if a timeout T (a preset parameter) expires, so all senders can refund their coins if the coins have not been 
-spent by the receivers after T, and 2) if all payments are successful, the receiver to claim her coins. For each channel, the sender 
-updates the channel and creates a $TX_p$, which transaction can transfer coins to the receiver only after $TX_{ep}$ appeared on the 
-blockchain before time T. If at least one receiver does not receive the coins(channel fails to execute the payment), $TX_{ep}$ will be 
-triggered, and all payment transactions will be enforced before time T.
-
-\section{Solution Overview}
-In this section, we present our key idea.
+\section{Our approach}
+As previously mentioned, Blitz successfully achieves constant collateral through one-phase communication. Thus, our approach 
+adopts a protocol similar to Blitz but aims to address the anonymity concerns. For compatibility, the minimum requirement for 
+scripting capability of our protocol is limited to digital signature.  
 
 \subsection{Security and privacy goals}
 
